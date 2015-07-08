@@ -1,0 +1,12 @@
+<body>
+{% if ev_list %}
+    <ul>
+    {% for ev in ev_list %}
+        <li><a href="{% url 'events:vendor' ev.vendor.name %}">
+            {{ ev }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</body>
