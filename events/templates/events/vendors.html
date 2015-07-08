@@ -11,9 +11,9 @@
         <ul>
         {% for v in vendors %}
             <li>
-                <a href="{% url 'events:vendor' v[0] %}">v[0]
+                <a href="{% url 'events:vendor' v.0 %}">{{ v.0 }}
                 </a>
-                v[1]
+                {{ v.1 }}
             </li>
         {% endfor %}
         </ul>

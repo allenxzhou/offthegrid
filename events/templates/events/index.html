@@ -1,6 +1,6 @@
 <html>
     <head>
-        <a href="/">
+        <a href="{% url 'home:index' %}">
             OFF THE GRID
         </a>
     </head>
@@ -9,8 +9,7 @@
         <ul>
         {% for event in events %}
             <li>
-            <a href="{% url 'events:details' event_name=event.name 
-                      event_date=event.date %}">
+            <a href="{% url 'events:details' event.name event.date %}">
                 {{ event }}
             </a>
             </li>

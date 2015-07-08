@@ -5,7 +5,8 @@ import datetime
 
 # Create your views here.
 def index(request):
-    events_list = Event.objects.order_by('date')[:5]
+    future_marker = datetime.datetime.now() + datetime.timedelta(14)
+    events_list = Event.objects.filter(date__lte=future_marker).order_by('date')
     context = {'events': events_list}
 
     return render(request, 'events/index.html', context)
@@ -34,7 +35,7 @@ def vendors(request, days=30):
 
     for v in vendor_list:
         ev_list = Event_Vendor.objects.filter(vendor=v,
-                  events__date__lte=curr_marker, events__date__gte=past_marker)
+                  event__date__lte=curr_marker, event__date__gte=past_marker)
 
         counts[v.name] = len(ev_list)
 
@@ -42,5 +43,6 @@ def vendors(request, days=30):
     for k in sorted(counts, key=counts.get, reverse=True):
         vendors.append((k, counts[k]))
 
+    print vendors
     return render(request, 'events/vendors.html', {'vendors': vendors})
 
