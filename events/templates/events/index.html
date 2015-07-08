@@ -8,9 +8,10 @@
     <body>
         <ul>
         {% for event in events %}
-            <li><a href="{% url 'events:details' event.name str(event.date) %}">
+            <li>
+            <a href="{% url 'events:details' event.name event.date.isoformat() %}">
                 {{ event }}
-                </a>
+            </a>
             </li>
         {% endfor %}
         </ul>
