@@ -9,7 +9,8 @@
         <ul>
         {% for event in events %}
             <li>
-            <a href="{% url 'events:details' event.name event.date.isoformat() %}">
+            <a href="{% url 'events:details' event_name=event.name 
+                      event_date=event.date %}">
                 {{ event }}
             </a>
             </li>
