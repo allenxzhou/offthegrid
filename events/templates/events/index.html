@@ -1,14 +1,15 @@
 <html>
     <head>
-        OFF THE GRID
+        <a href="{% url 'events:index' %}">
+            OFF THE GRID
+        </a>
     </head>
 {% if events %}
     <body>
         <ul>
         {% for event in events %}
-            <li><a href="{% url 'events:details' event.name event.date %}">
+            <li>
                 {{ event }}
-                </a>
             </li>
         {% endfor %}
         </ul>

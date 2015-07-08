@@ -1,15 +1,22 @@
-<body>
-{% if ev_list %}
-    <h1>
-        {{ name }}
-    </h1>
-    <h3>
-        Past occurrences: {{ count }}
-    </h3>
-    <ul>
-    {% for ev in ev_list %}
-        <li>{{ ev }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-</body>
+<html>
+    <head>
+        <a href="{% url 'events:index' %}">
+            OFF THE GRID
+        </a>
+    </head>
+    <body>
+    {% if ev_list %}
+        <h1>
+            {{ name }}
+        </h1>
+        <h3>
+            Past occurrences: {{ count }}
+        </h3>
+        <ul>
+        {% for ev in ev_list %}
+            <li>{{ ev }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </body>
+</html>
