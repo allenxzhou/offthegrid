@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <a href="{% url 'home:index' %}">
+            OFF THE GRID
+        </a>
+    </head>
+    <body>
+        <h1> VENDORS </h1>
+        
+    {% if vendors %}
+        <ul>
+        {% for v in vendors %}
+            <li>
+                <a href="{% url 'events:vendor' v[0] %}">v[0]
+                </a>
+                v[1]
+            </li>
+        {% endfor %}
+        </ul>
+        <ul>
+    {% endif %}
+    </body>
+</html>
