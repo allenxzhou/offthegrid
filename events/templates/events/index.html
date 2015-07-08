@@ -8,8 +8,9 @@
     <body>
         <ul>
         {% for event in events %}
-            <li>
+            <li><a href="{% url 'events:details' event.name event.date %}">
                 {{ event }}
+                </a>
             </li>
         {% endfor %}
         </ul>
