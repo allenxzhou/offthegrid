@@ -1,22 +1,48 @@
+<!-- Individual Vendor's Page -->
 <html>
     <head>
         <a href="{% url 'home:index' %}">
             OFF THE GRID
         </a>
     </head>
+    {% autoescape off %}
     <body>
-    {% if ev_list %}
         <h1>
             {{ name }}
         </h1>
         <h3>
-            Past occurrences: {{ count }}
+            Past # of occurrences: {{ past_count }}
         </h3>
+    {% if past_list %}
+        <h4>
+            Past Events
+        </h4>
         <ul>
-        {% for ev in ev_list %}
-            <li>{{ ev }}</li>
+        {% for p in past_list %}
+            <li><a href="{% url 'events:details' p.name p.date %}">
+                {{ p }}
+                </a>
+            </li>
         {% endfor %}
         </ul>
     {% endif %}
+
+        <h3>
+            Future # of occurrences: {{ future_count }}
+        </h3>
+    {% if future_list %}
+        <h4>
+            Future Events
+        </h4>
+        <ul>
+        {% for f in future_list %}
+            <li><a href="{% url 'events:details' f.name f.date %}">
+                {{ f }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
     </body>
+    {% endautoescape %}
 </html>

@@ -19,7 +19,8 @@ class Event(models.Model):
         unique_together = ("name", "date")
 
     def __str__(self):
-        return str(self.name + " " + self.date.isoformat() + " " + self.location)
+        return str(self.name + " --- " + self.date.isoformat() + 
+                    " --- " + self.location)
 
 class Event_Vendor(models.Model):
     event = models.ForeignKey(Event)
@@ -29,5 +30,5 @@ class Event_Vendor(models.Model):
         unique_together = ("event", "vendor")
 
     def __str__(self):
-        return str(self.event) + " " + str(self.vendor)
+        return str(self.event) + " --- " + str(self.vendor)
 

@@ -1,11 +1,14 @@
+<!-- Events Page -->
 <html>
     <head>
         <a href="{% url 'home:index' %}">
             OFF THE GRID
         </a>
     </head>
+{% autoescape off %}
 {% if events %}
     <body>
+        <h2>Future Events:</h2>
         <ul>
         {% for event in events %}
             <li>
@@ -17,5 +20,6 @@
         </ul>
     </body>
 {% endif %}
+{% endautoescape %}
 
 </html>

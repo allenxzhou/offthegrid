@@ -1,10 +1,22 @@
-from .models import Event, Vendor, Event_Vendor
+# Updates database based on information existing on Off-The-Grid's website
+
+from django.core.management.base import BaseCommand, CommandError
 from django.db import IntegrityError
+from events.models import Event, Vendor, Event_Vendor
+
 import requests, json
 import datetime
 import re
 import time
 
+# Command created to allow for 'python manage.py updateDatabase' calls
+class Command(BaseCommand):
+    help = 'Fetches all upcoming events from Off-The-Grid\'s website'
+
+    def handle(self, *args, **options):
+        updateDatabase()
+
+# Main command for updating the database
 def updateDatabase():
 
     start_time = time.time()
@@ -50,7 +62,7 @@ def updateDatabase():
 
     print("Run time: {0} seconds").format(end_time - start_time)
 
-
+# Processes all parsed fields
 def processParse(p_dict):
     event_list = []
 
@@ -75,7 +87,7 @@ def processParse(p_dict):
 
     return True
 
-
+# Inserts an event into the database - encapsulated in try-except clause
 def insertEvent(name, date, start, end, location):
     e = Event(name=name, date=date, start=start, end=end, location=location)
 
@@ -91,7 +103,7 @@ def insertEvent(name, date, start, end, location):
 
     return e
 
-
+# Inserts a vendor into the database - encapsulated in try-except clause
 def insertVendor(name):
     v = Vendor(name=name)
 
@@ -106,7 +118,7 @@ def insertVendor(name):
 
     return v
 
-
+# Inserts an event_vendor into the database - encapsulated in try-except clause
 def insertEventVendor(event, vendor):
     ev = Event_Vendor(event=event, vendor=vendor)
 
@@ -121,7 +133,7 @@ def insertEventVendor(event, vendor):
 
     return ev
 
-
+# Helper method for determining if the page has any meaningful information
 def miss(text):
     classes = [
         'otg-market-data-vendors-names',
@@ -138,11 +150,16 @@ def miss(text):
 
     return found <= 1
 
-
+# Overall function for parsing the given webpage
+# - inner functions:
+#   - parseDetails
+#   - parseDates
+#   - parseVendors
 def parseAll(text):
 
     general_tag = r'.*?>(.*?)</'
 
+    # Parses the event details (i.e. name, address)
     def parseDetails(text):
         detail_classes = {
             'name': 'otg-market-data-name',
@@ -163,10 +180,10 @@ def parseAll(text):
 
         return details
 
-
+    # Parses the event's time information (i.e. date, hours, ampm)
     def parseDates(text):
         date_classes = {
-            'day': 'otg-market-data-events-event-day',
+            #'day': 'otg-market-data-events-event-day',
             'hours': 'otg-market-data-events-event-hours',
             'ampm': 'otg-market-data-events-event-ampm',
             'date': 'otg-market-data-events-pagination',
@@ -223,7 +240,7 @@ def parseAll(text):
 
         return {'splits': split_indices, 'dates': dates, 'hours': hours}
 
-
+    # Parses the vendor's information (i.e. all vendors for a given event)
     def parseVendors(text, dates, splits):
         vendor_classes = {
             'link': 'otg-markets-data-vendor-name-link',
@@ -260,9 +277,3 @@ def parseAll(text):
     vendors = parseVendors(text, dates, splits)
 
     return {'vendors': vendors, 'dates_dict': dates_dict, 'details': details}
-
-
-if __name__ == '__main__':
-    updateDatabase()
-
-

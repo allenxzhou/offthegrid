@@ -1,9 +1,11 @@
+<!-- All Vendors Page -->
 <html>
     <head>
-        <a href="/">
+        <a href="{% url 'home:index' %}">
             OFF THE GRID
         </a>
     </head>
+    {% autoescape off %}
     <body>
         <h1> VENDORS </h1>
         
@@ -11,13 +13,13 @@
         <ul>
         {% for v in vendors %}
             <li>
-                <a href="{% url 'events:vendor' v.0 %}">{{ v.0 }}
-                </a>
-                {{ v.1 }}
+                <a href="{% url 'events:vendor' v.0 %}">{{ v.0 }}</a>
+                <div><strong>{{ v.1 }}</strong></div>
             </li>
         {% endfor %}
         </ul>
         <ul>
     {% endif %}
     </body>
+    {% endautoescape %}
 </html>

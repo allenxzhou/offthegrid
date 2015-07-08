@@ -1,19 +1,29 @@
+<!-- Specific Event's Details Page-->
 <html>
     <head>
         <a href="{% url 'home:index' %}">
             OFF THE GRID
         </a>
     </head>
+    {% autoescape off %}
     <body>
-    {% if ev_list %}
+    {% if event %}
+        <h1>{{ event.name }}</h1>
+        <h2>{{ event.date }}</h2>
+        <h2>{{ event.location }}</h2>
+        <h2>{{ event.start }} to {{ event.end }}</h2>
+    {% endif %}
+    {% if vendors %}
+        <h2> Attending Vendors: </h2>
         <ul>
-        {% for ev in ev_list %}
-            <li><a href="{% url 'events:vendor' ev.vendor.name %}">
-                {{ ev }}
+        {% for v in vendors %}
+            <li><a href="{% url 'events:vendor' v.name %}">
+                {{ v }}
                 </a>
             </li>
         {% endfor %}
         </ul>
     {% endif %}
     </body>
+    {% endautoescape %}
 </html>
